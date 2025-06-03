@@ -1,0 +1,23 @@
+{
+  "name": "loja_carros",
+  "version": "1.0.0",
+  "description": "\"Api para loja de carros\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VittorLK/Loja-de-carros.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VittorLK/Loja-de-carros/issues"
+  },
+  "homepage": "https://github.com/VittorLK/Loja-de-carros#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
+  }
+}

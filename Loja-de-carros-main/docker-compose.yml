@@ -1,0 +1,57 @@
+services:
+  # Serviço do Banco de Dados MySQL
+  db:
+    image: mysql:8.0
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '1234'
+      MYSQL_DATABASE: 'loja_de_carros'
+    ports:
+      - "3306:3306"
+    volumes:
+      # Garante que os dados do banco não sejam perdidos
+      - mysql_data:/var/lib/mysql
+      # Executa o nosso script SQL na inicialização do banco
+      - ./app-principal/loja_de_carros.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Serviço da Aplicação Principal
+  app-principal:
+    build:
+      context: ./app-principal
+      dockerfile: Dockerfile
+    container_name: app_principal_service
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      MYSQL_HOST: 'db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '1234'
+      MYSQL_DATABASE: 'loja_de_carros'
+    depends_on:
+      - db
+
+  # Serviço da Aplicação de Relatórios
+  app-relatorios:
+    build:
+      context: ./app-relatorios
+      dockerfile: Dockerfile
+    container_name: app_relatorios_service
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      MYSQL_HOST: 'db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: '1234'
+      MYSQL_DATABASE: 'loja_de_carros'
+    depends_on:
+      - db
+
+# Define o volume para persistência dos dados
+volumes:
+  mysql_data:

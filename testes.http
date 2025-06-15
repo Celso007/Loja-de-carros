@@ -1,0 +1,83 @@
+### ==================================
+###         CONSULTAS GERAIS (GET)
+### ==================================
+
+### Listar todos os clientes
+GET http://localhost:3000/clientes
+
+### Listar todos os carros
+GET http://localhost:3000/carros
+
+### Listar todos os vendedores
+GET http://localhost:3000/vendedores
+
+
+### ==================================
+###      TESTES DE UPDATE (PUT)
+### ==================================
+
+### ATUALIZAR o telefone do cliente "Paulo de Magalhães"
+PUT http://localhost:3000/clientes/111.111.111-11
+Content-Type: application/json
+
+{
+    "telefone": "71-99999-0000"
+}
+
+
+### ATUALIZAR o preço do Jeep Compass (carro ID 5)
+PUT http://localhost:3000/carros/5
+Content-Type: application/json
+
+{
+    "preco": "185000.00"
+}
+
+
+### ===================================
+###      TESTES DE DELETE (DELETE)
+### ===================================
+
+### TENTAR DELETAR a vendedora "Carla de Jesus" (deve dar erro, pois ela tem vendas)
+DELETE http://localhost:3000/vendedores/102
+
+
+### DELETAR o cliente "Rui Almeida" (deve funcionar, pois ele não tem compras)
+DELETE http://localhost:3000/clientes/333.333.333-33
+
+
+### ===================================
+###       TESTES DE VENDAS
+### ===================================
+
+### VENDER um carro disponível (Jeep Renegade, ID 7)
+POST http://localhost:3000/vendas
+Content-Type: application/json
+
+{
+    "cliente_cpf": "111.111.111-11",
+    "carro_id": 7,
+    "vendedor_matricula": 101,
+    "preco_final": 134500.00
+}
+
+
+### CANCELAR a venda que acabamos de fazer (a venda terá ID 4, pois já existem 3)
+DELETE http://localhost:3000/vendas/4
+
+
+### ===================================
+#       SERVIÇO DE RELATÓRIOS
+### ===================================
+
+### Relatório: Carros mais vendidos
+GET http://localhost:4000/relatorios/mais-vendidos
+
+### Relatório: Compras do cliente "Ivana Medeiros"
+GET http://localhost:4000/relatorios/compras-por-cliente/222.222.222-22
+
+### Relatório: Consumo dos clientes (total e médio)
+GET http://localhost:4000/relatorios/consumo-clientes
+
+### Relatório: Carros com baixo estoque (vendidos / indisponíveis)
+GET http://localhost:4000/relatorios/baixo-estoque
